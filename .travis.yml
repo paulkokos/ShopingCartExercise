@@ -1,17 +1,14 @@
 # see http://about.travis-ci.org/docs/user/languages/php/ for more hints
 language: php
 
-sudo: false
- 
- cache:
-   directories:
-     - $HOME/.composer/cache
- 
  branches:
    except:
      - /^bugfix\/.*$/
      - /^feature\/.*$/
      - /^optimization\/.*$/
+ 
+ os:
+  linux
  
  matrix:
    include:
@@ -29,12 +26,7 @@ sudo: false
      - php: hhvm
        dist: trusty
    fast_finish: true
-    
-os:
-  linux
-
-
-      
+       
 # optionally specify a list of environments, for example to test different RDBMS
 env:
   - DB=mysql
@@ -53,8 +45,8 @@ before_script:
 # use the $DB env variable to determine the phpunit.xml to use
 script: 
   - phpunit --configuration phpunit_$DB.xml --coverage-text
-  - vendor/bin/phpspec run -fpretty -v
-  - vendor/bin/phpunit
+  #- vendor/bin/phpspec run -fpretty -v
+  #- vendor/bin/phpunit
 
 
 
