@@ -9,24 +9,13 @@ language: php
  
  os:
   linux
- 
- matrix:
-   include:
-     - php: 5.4
-     - php: 5.5
-     - php: 5.6
-       env: DEPENDENCIES='low'
-     - php: 5.6
-     - php: 7.0
-     - php: 7.1
-+    - php: 7.2
-     - php: 5.3
-       dist: precise
-     # Use the newer stack for HHVM as HHVM does not support Precise anymore since a long time and so Precise has an outdated version
-     - php: hhvm
-       dist: trusty
-   #fast_finish: true
-       
+  
+  php:
+    - '7.0'
+    - '7.1'
+    - '7.2'
+install:
+    - composer install      
 # optionally specify a list of environments, for example to test different RDBMS
 env:
   - DB=mysql
@@ -44,11 +33,11 @@ before_script:
 # omitting "script:" will default to phpunit
 # use the $DB env variable to determine the phpunit.xml to use
 script: 
+
+  - wget -O box.phar https://github.com/box-project/box2/releases/download/2.7.5/box-2.7.5.phar
+  - php -d phar.readonly=0 box.phar build && sudo mv dix.phar /usr/local/bin/dix && sudo chmod +x /usr/local/bin/dix
+  - vendor/bin/phpunit
   - phpunit --configuration phpunit_$DB.xml --coverage-text
   #- vendor/bin/phpspec run -fpretty -v
   #- vendor/bin/phpunit
-
-
-
- 
  
