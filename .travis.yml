@@ -19,7 +19,15 @@ php:
   - 7.0
   # aliased to a recent hhvm version
   - hhvm
+os:
+  -linux
 
+matrix:
+    include:
+         os: linux
+      dist: trusty
+      sudo: required
+      
 # optionally specify a list of environments, for example to test different RDBMS
 env:
   - DB=mysql
