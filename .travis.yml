@@ -19,7 +19,8 @@ matrix:
   allow_failures:
     - php: 7.0
     - php: hhvm
-
+install:
+  -composer require --dev phpunit/phpunit ^6.0
 # execute any number of scripts before the test run, custom env's are available as variables
 before_script:
   
