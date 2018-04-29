@@ -25,7 +25,7 @@ language: php
      # Use the newer stack for HHVM as HHVM does not support Precise anymore since a long time and so Precise has an outdated version
      - php: hhvm
        dist: trusty
-   fast_finish: true
+   #fast_finish: true
        
 # optionally specify a list of environments, for example to test different RDBMS
 env:
