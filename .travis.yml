@@ -29,12 +29,7 @@ sudo: false
      - php: hhvm
        dist: trusty
    fast_finish: true
- 
- install:
-   
- 
- script:
-   
+    
 os:
   linux
 
