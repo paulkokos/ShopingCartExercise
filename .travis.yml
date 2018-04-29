@@ -25,7 +25,7 @@ os:
 matrix:
     include:
          os: linux
-      dist: trusty
+      dist: Precise
       sudo: required
       
 # optionally specify a list of environments, for example to test different RDBMS
