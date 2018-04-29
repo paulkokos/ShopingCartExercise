@@ -1,6 +1,40 @@
 # see http://about.travis-ci.org/docs/user/languages/php/ for more hints
 language: php
 
+sudo: false
+ 
+ cache:
+   directories:
+     - $HOME/.composer/cache
+ 
+ branches:
+   except:
+     - /^bugfix\/.*$/
+     - /^feature\/.*$/
+     - /^optimization\/.*$/
+ 
+ matrix:
+   include:
+     - php: 5.4
+     - php: 5.5
+     - php: 5.6
+       env: DEPENDENCIES='low'
+     - php: 5.6
+     - php: 7.0
+     - php: 7.1
++    - php: 7.2
+     - php: 5.3
+       dist: precise
+     # Use the newer stack for HHVM as HHVM does not support Precise anymore since a long time and so Precise has an outdated version
+     - php: hhvm
+       dist: trusty
+   fast_finish: true
+ 
+ install:
+   
+ 
+ script:
+   
 os:
   linux
 
@@ -12,12 +46,22 @@ env:
   - DB=pgsql
 
 install:
-  composer require --dev phpunit/phpunit ^5.0
-# execute any number of scripts before the test run, custom env's are available as variables
+- export COMPOSER_ROOT_VERSION=dev-master
+   - if [ "$DEPENDENCIES" != "low" ]; then composer update; fi;
+   - if [ "$DEPENDENCIES" == "low" ]; then composer update --prefer-lowest; fi;
+
 before_script:
   
   - if [[ "$DB" == "mysql" ]]; then mysql -e "create database IF NOT EXISTS hello_world_test;" -uroot; fi
 
 # omitting "script:" will default to phpunit
 # use the $DB env variable to determine the phpunit.xml to use
-script: phpunit --configuration phpunit_$DB.xml --coverage-text
+script: 
+  - phpunit --configuration phpunit_$DB.xml --coverage-text
+  - vendor/bin/phpspec run -fpretty -v
+  - vendor/bin/phpunit
+
+
+
+ 
+ 
